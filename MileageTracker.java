@@ -8,6 +8,25 @@
 public class MileageTracker
 {
     /*
+     * 2. Definte the instance variables (store the object's attributes):
+     *      specify the visibility (e.g., private)
+     *          public: accessible by any code in any class
+     *          private: only accessible by methods in this class
+     *      specify the type (e.g., double)
+     *      specify the name (e.g., milesDriven)
+     *      
+     *  Instance variables differ from local variables in the following ways:
+     *      scoped to the class (accessible in all methods of the class;
+     *          lifetime is the same as the object)
+     *      automatically initialized to a default value (0, false, null)
+     *      best practice is not to immediately initialize instance variables
+     */
+    private double milesDriven; // in units of miles
+    private double fuelConsumed; // in units of gallons
+    private String vin; // vehicle identification
+    
+    
+    /*
      * 1. Define methods by specifying:
      *      the visibility (e.g., public)
      *      the return type (e.g., void)
