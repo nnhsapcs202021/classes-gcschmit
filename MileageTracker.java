@@ -25,6 +25,46 @@ public class MileageTracker
     private double fuelConsumed; // in units of gallons
     private String vin; // vehicle identification
     
+    /*
+     * 3. Define the constructor(s):
+     *      responsible for initializing newly creataed objects
+     *      invoked automatically via the new operator
+     *      name of the constructor must match the name of the class
+     *      has no return type (not even void)
+     *      multiple constructors may be defined for a class
+     *      one constructor may call another constructor (with restrictions)
+     */
+    
+    /**
+     * Default constructor for the MileageTracker class.
+     *      Initiliazes this object's miles driven and fuel consumed to 0 and
+     *          the VIN to null.
+     */
+    public MileageTracker()
+    {
+        /*
+         * The "this" reserved word references the current object
+         *      (like "self" in Python).
+         *  Its usage is encouraged but not always required.
+         */
+        this.milesDriven = 0;
+        this.fuelConsumed = 0;
+        this.vin = null;
+    }
+    
+    /**
+     * Constructs a new MileageTracker object with the specified
+     *      miles driven and fuel consumed.
+     *  
+     *  @param initialMilesDriven the number of miles already driven
+     *  @param initialFuelConsumed the number of gallons of fuel already consumed
+     */
+    public MileageTracker(double initialMilesDriven,double initialFuelConsumed)
+    {
+        this.milesDriven = initialMilesDriven;
+        this.fuelConsumed = initialFuelConsumed;
+        this.vin = null;
+    }
     
     /*
      * 1. Define methods by specifying:
@@ -41,6 +81,8 @@ public class MileageTracker
      */
     public void incrementMilesDriven(double miles)
     {
+        // this.milesDriven = this.milesDriven + miles;
+        this.milesDriven += miles;
     }
     
     /**
@@ -50,7 +92,7 @@ public class MileageTracker
      */
     public double getMilesDriven()
     {
-        return 0.0;
+        return this.milesDriven;
     }
     
     /**
@@ -60,7 +102,7 @@ public class MileageTracker
      */
     public void incrementFuelConsumed(double gallons)
     {
-        
+        this.fuelConsumed += gallons;
     }
     
     /**
@@ -70,7 +112,7 @@ public class MileageTracker
      */
     public double getFuelConsumed()
     {
-        return 0.0;
+        return this.fuelConsumed;
     }
     
     
@@ -81,7 +123,8 @@ public class MileageTracker
      */
     public double getMileage()
     {
-        return 0.0;
+        double mileage = this.milesDriven / this.fuelConsumed;
+        return mileage;
     }
     
     /**
@@ -99,9 +142,22 @@ public class MileageTracker
      * 
      * @param newVIN    the vehicle identification (VIN) of this car
      */
-    public void setVIN(String vin)
+    public void setVIN(String newVIN)
     {
-        vin = vin;
+        /*
+         * If the parameter was named vin, it would "shadow" the
+         *      instance varible in.
+         *      
+         *  Local and parameter variables "shadow" instance variables
+         *      of the same name. In this code, vin would refer to the
+         *      parameter and not the instance variable.
+         *      
+         *  To refer explicitly to an instance variable, use "this".
+         *  
+         *  Advice: avoid this issue by giving local, parameter, and
+         *      instance variables unique names!
+         */
+        this.vin = newVIN;
     }
 }
 

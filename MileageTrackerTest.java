@@ -72,6 +72,16 @@ public class MileageTrackerTest
         double mileage = testTracker.getMileage();
         assertEquals(25.0, mileage, 1e-6);
     }
+    
+    @Test
+    public void testSetVIN()
+    {
+        MileageTracker testTracker = new MileageTracker();
+        String testVIN = new String("V176342FGB45B323A");
+        testTracker.setVIN(testVIN);
+        String returnedVIN = testTracker.getVIN();
+        assertEquals(testVIN, returnedVIN);
+    }
 }
 
 
