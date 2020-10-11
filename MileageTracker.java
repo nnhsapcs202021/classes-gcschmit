@@ -8,7 +8,7 @@
 public class MileageTracker
 {
     /*
-     * 2. Definte the instance variables (store the object's attributes):
+     * 2. Define the instance variables (store the object's attributes):
      *      specify the visibility (e.g., private)
      *          public: accessible by any code in any class
      *          private: only accessible by methods in this class
