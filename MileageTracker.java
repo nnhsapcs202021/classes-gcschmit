@@ -134,7 +134,7 @@ public class MileageTracker
      */
     public String getVIN()
     {
-        return null;
+        return this.vin;
     }
     
     /**
