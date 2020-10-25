@@ -41,12 +41,113 @@ public class CaesarCipher
         // if we try to change the value, a compiler error will be generated
         //SECONDS_FOR_EVERY_MINUTE = 30;
         
-        String desc = "";
+        String desc;
     
         long totalSeconds = this.calculateAverageTimeToCrack(secPerGuess);
         
+        /*
+         * Use integer division to cacluate how many whole minutes are in the
+         *      specified number of seconds.
+         *      
+         *  Integer division (like // operator in Python) discards the remainder (truncates).
+         *  
+         *  Java does integer division when both operands are integer types;
+         *      floating-point division when one or both operands are floating-point types.
+         *      
+         *  For example:
+         *      3 / 4 => 0      (3 and 4 are int literals)
+         *      3.0 / 4 => 0.75 (3.0 is a double literal)
+         */
+        long wholeMinutes = totalSeconds / SECONDS_FOR_EVERY_MINUTE;
         
-        return "";
+        /*
+         * Use the modulo (mod, remainder) operator to calculate how many seconds are
+         *      leftover.
+         *      
+         *  The mod operator (%) returns the remainder of the division operation.
+         *  
+         *  It can be very useful when paired with integer division.
+         *  
+         *  For examples:
+         *      7 % 2 => 1
+         *      11 % 3 => 2
+         *      6 % 2 => 0
+         *      4 % 11 => 4
+         *      
+         *  % 2 is frequently used to test odd/even (odd => 1; even => 0)
+         */
+        long leftoverSeconds = totalSeconds % SECONDS_FOR_EVERY_MINUTE;
+        
+        long wholeHours = wholeMinutes / MINUTES_FOR_EVERY_HOUR;
+        long leftoverMinutes = wholeMinutes % MINUTES_FOR_EVERY_HOUR;
+        
+        long wholeDays = wholeHours / HOURS_FOR_EVERY_DAY;
+        long leftoverHours = wholeHours % HOURS_FOR_EVERY_DAY;
+        
+        long wholeYears = wholeDays / DAYS_FOR_EVERY_YEAR;
+        long leftoverDays = wholeDays % DAYS_FOR_EVERY_YEAR;
+        
+        desc = "Average time to crack: " + wholeYears + " years, " + leftoverDays +
+                " days, " + leftoverHours + " hours, " + leftoverMinutes + " minutes, " +
+                leftoverSeconds + " seconds\n";
+        
+        /*
+         * A converstion is when a data value is converted from one type to another
+         *      (e.g., int to a double, double to an int, int to a long)
+         *      
+         *  Widening: preserves information (e.g., int to a double, int to a long)
+         *  Narrowing: lossy; may lose information (e.g., double to an int)
+         *  
+         *  Java only automatically performs widening conversions.
+         */
+        double yearsAsDecimal = totalSeconds;
+        
+        /*
+         * Arithmetic Promotion
+         * 
+         *  If the two operands are of different types, Java attempts to promote one
+         *      of the operands (widening conversion) and then performs the operation.
+         *      
+         *  In this case, both SECONDS_FOR_EVERY_MINUTE and MINUTES_FOR_EVERY_HOUR are ints;
+         *      so, Java doesn't perform any promtion, and instead, performs the
+         *      multiplication and returns the result as an int. Only after all three
+         *      multiplications does Java promote the int value of the resulting product
+         *      to a long and then assigns it to SECONDS_FOR_EVERY_YEAR.
+         *      
+         *  This promotion may be too late! If the multiplication overflows an int,
+         *      the wrong value will be promoted to a long and stored.
+         */
+        final long SECONDS_FOR_EVERY_YEAR = SECONDS_FOR_EVERY_MINUTE *
+                MINUTES_FOR_EVERY_HOUR * HOURS_FOR_EVERY_DAY * DAYS_FOR_EVERY_YEAR;
+        
+        /*
+         * In this example, the value of SECONDS_FOR_EVERY_YEAR is promoted to a double
+         *      and then floating-point division is performed and assigned to
+         *      yearsAsDecimal.
+         *      
+         *  The local variable SECONDS_FOR_EVERY_YEAR is still a long and still has
+         *      the same value.
+         */
+        yearsAsDecimal = yearsAsDecimal / SECONDS_FOR_EVERY_YEAR;
+        desc += "or " + yearsAsDecimal + " years\n";
+        
+        /*
+         * To force a narrowing conversion, use the cast operator.
+         *      A cast is the "I know what I'm doing, trust me" conversion.
+         *      
+         *  (int)(84.69) => truncates to an int with a value of 84
+         *  
+         *  If we want to round a double to the nearest ineger value, use Math.round
+         *      method:
+         *      public static long round(double value)
+         *      
+         *  The following divides yearsAsDecimal by 10, then rounds the resulting double
+         *      value to the nearest decade, and then casts the restulign long to an int
+         */
+        int decades = (int)(Math.round(yearsAsDecimal / 10));
+        desc += "or about " + decades + " decades\n";
+        
+        return desc;
     }
     
     
